@@ -16,21 +16,76 @@ public class Pathmaker : MonoBehaviour {
 
 //	DECLARE CLASS MEMBER VARIABLES:
 //	Declare a private integer called counter that starts at 0; 		// counter var will track how many floor tiles I've instantiated
+	int Counter = 0;
 //	Declare a public Transform called floorPrefab, assign the prefab in inspector;
+	public Transform floorPrefab; 
 //	Declare a public Transform called pathmakerSpherePrefab, assign the prefab in inspector; 		// you'll have to make a "pathmakerSphere" prefab later
+	public Transform pathmakerSpherePrefab;
+
+	public int Max_Tile_Amount;
+	public static int Global_Max_Tile_Amount;
+
+	[Range(0f,1.0f)]
+	public float Chance_For_New_Sphere;
+
+	public Color[] Floor_Colors;
+	int Floor_Color_Index;
+
+	void Start(){
+	
+	}
 
 
 	void Update () {
+
 //		If counter is less than 50, then:
 //		Generate a random number from 0.0f to 1.0f;
 //		If random number is less than 0.25f, then rotate myself 90 degrees;
 //			... Else if number is 0.25f-0.5f, then rotate myself -90 degrees;
 //			... Else if number is 0.99f-1.0f, then instantiate a pathmakerSpherePrefab clone at my current position;
 //		// end elseIf
+		Floor_Color_Index = Random.Range(0,Floor_Colors.Length);
 
+		if (Counter < Max_Tile_Amount) {
+			float New_Random_Number = Random.Range (0.0f, 1.0f);
+			if (New_Random_Number < .25f) {
+				transform.Rotate (90, 0, 0);
+
+			} else if (New_Random_Number > .25f && New_Random_Number < .5f) {
+				transform.Rotate (-90, 0, 0);
+
+			} else if (New_Random_Number > Chance_For_New_Sphere && New_Random_Number < 1.0f) {
+				Instantiate (pathmakerSpherePrefab, transform.position, Quaternion.Euler (0, 0, 0));
+			}
+			if (Global_Max_Tile_Amount < Max_Tile_Amount) { // only instantiateing if not in our max tile ammount
+				Instantiate (floorPrefab, transform.position, Quaternion.Euler (0, 0, 90));
+				transform.position += transform.forward * 5;
+				Counter++;
+				Global_Max_Tile_Amount++;
+			} else {
+				Destroy (gameObject);
+
+			}
+		} else {
+
+			Destroy (gameObject);
+		}
+
+//		if (Global_Max_Tile_Amount >= Max_Tile_Amount) {
+//			Destroy (gameObject);
+//		}
+
+
+
+
+
+		Debug.Log (Global_Max_Tile_Amount);
 //		Instantiate a floorPrefab clone at current position;
 
+
 //		Move forward ("forward" in local space, relative to the direction I'm facing) by 5 units;
+	
+
 //			Increment counter;
 //			Else:
 //			Destroy my game object; 		// self destruct if I've made enough tiles already
