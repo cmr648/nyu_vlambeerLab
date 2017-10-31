@@ -96,8 +96,12 @@ MonoBehaviour:
   floorPrefab: {fileID: 4113209856346078, guid: 65a6189e1bac1f549afc3dc95369929d,
     type: 2}
   pathmakerSpherePrefab: {fileID: 4030185718407524}
-  Max_Tile_Amount: 2000
+  Max_Tile_Amount: 5000
   Chance_For_New_Sphere: 0.99
+  Floor_Colors:
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0.21379304, b: 1, a: 0}
+  - {r: 0.4068966, g: 1, b: 0, a: 0}
 --- !u!135 &135699719679610232
 SphereCollider:
   m_ObjectHideFlags: 1

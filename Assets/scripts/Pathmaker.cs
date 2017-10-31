@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // MAZE PROC GEN LAB
 // all students: complete steps 1-6, as listed in this file
@@ -31,12 +32,17 @@ public class Pathmaker : MonoBehaviour {
 	public Color[] Floor_Colors;
 	int Floor_Color_Index;
 
+
 	void Start(){
 	
 	}
 
 
 	void Update () {
+
+		if (Input.GetKeyDown (KeyCode.R)) {
+			SceneManager.LoadScene ("mainLabScene");
+		}
 
 //		If counter is less than 50, then:
 //		Generate a random number from 0.0f to 1.0f;
@@ -58,7 +64,8 @@ public class Pathmaker : MonoBehaviour {
 				Instantiate (pathmakerSpherePrefab, transform.position, Quaternion.Euler (0, 0, 0));
 			}
 			if (Global_Max_Tile_Amount < Max_Tile_Amount) { // only instantiateing if not in our max tile ammount
-				Instantiate (floorPrefab, transform.position, Quaternion.Euler (0, 0, 90));
+				Transform new_Floor = Instantiate (floorPrefab, transform.position, Quaternion.Euler (0, 0, 90));
+				new_Floor.GetComponent<Renderer>().material.color = new Color (Floor_Colors [Floor_Color_Index].r, Floor_Colors [Floor_Color_Index].g, Floor_Colors [Floor_Color_Index].b);
 				transform.position += transform.forward * 5;
 				Counter++;
 				Global_Max_Tile_Amount++;
